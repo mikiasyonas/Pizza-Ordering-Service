@@ -10,7 +10,8 @@
     "format": "prettier write --list-different .",
     "format:fix": "prettier --check",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "services:up": "docker compose up -d"
   },
   "dependencies": {
     "next": "14.2.13",
