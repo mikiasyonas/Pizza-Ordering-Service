@@ -14,13 +14,13 @@
     "format": "prettier write --list-different .",
     "format:fix": "prettier --check",
     "lint-staged": "lint-staged",
-    "prepare": "husky",
     "services:up": "docker compose up -d",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed",
     "db:reset:force": "prisma migrate reset --force",
     "db:generate": "prisma generate"
+    "prepare": "husky"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
