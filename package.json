@@ -19,7 +19,7 @@
     "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed",
     "db:reset:force": "prisma migrate reset --force",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
     "prepare": "husky"
   },
   "dependencies": {
