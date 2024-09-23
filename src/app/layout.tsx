@@ -3,9 +3,6 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { StyledRoot } from './StyledRoot';
-import { getSession } from '@/config/authOptions';
-import { prisma } from '@/prisma/client';
-import { redirect } from 'next/navigation';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -28,23 +25,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const serverSession = await getSession();
-
-  if (!serverSession) {
-    redirect('/login');
-  }
-
-  if (serverSession) {
-    const userInRestaurant = await prisma.role.findUnique({
-      where: {
-        userId: serverSession.user?.id,
-      },
-    });
-
-    if (!userInRestaurant) {
-      redirect('/login');
-    }
-  }
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
