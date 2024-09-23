@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  password    String
+  phoneNumber String
+  location    String
+  role        Role?
+}
+
+model Restaurant {
+  id        Int      @id @default(autoincrement())
+  name      String
+  imagePath String
+  roles     Role[]
+  Pizza     Pizza[]
+}
+
+model Role {
+  id           Int               @id @default(autoincrement())
+  name         String
+  userId       Int               @unique
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  restaurant   Restaurant       @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  permissions  RolePermission[]
+}
+
+model Permission {
+  id             Int               @id @default(autoincrement())
+  name           String
+  rolePermission RolePermission[]
+}
+
+model RolePermission {
+  id           Int         @id @default(autoincrement())
+  role         Role       @relation(fields: [roleId], references: [id])
+  roleId       Int
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId Int
+}
+
+model Pizza {
+  id           Int         @id @default(autoincrement())
+  name         String
+  toppings     Topping[]
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Topping {
+  id      Int     @id @default(autoincrement())
+  name    String
+  pizza   Pizza  @relation(references: [id], fields: [pizzaId], onDelete: Cascade, onUpdate: Cascade)
+  pizzaId Int
+}
+
+model Order {
+  id           Int     @id @default(autoincrement())
+  status       String
+  userId       Int
+  restaurantId Int
+}

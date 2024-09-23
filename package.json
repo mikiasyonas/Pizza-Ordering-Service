@@ -2,6 +2,10 @@
   "name": "pizza-ordering-service",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "schema": "src/prisma/schema.prisma",
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJs\"} src/prisma/seed"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,10 +14,18 @@
     "format": "prettier write --list-different .",
     "format:fix": "prettier --check",
     "lint-staged": "lint-staged",
+    "services:up": "docker compose up -d",
+    "db:migrate": "prisma migrate dev",
+    "db:reset": "prisma migrate reset",
+    "db:seed": "prisma db seed",
+    "db:reset:force": "prisma migrate reset --force",
+    "db:generate": "prisma generate"
     "prepare": "husky"
   },
   "dependencies": {
+    "@prisma/client": "^5.19.1",
     "next": "14.2.13",
+    "prisma": "^5.19.1",
     "react": "^18",
     "react-dom": "^18"
   },
