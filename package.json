@@ -2,6 +2,10 @@
   "name": "pizza-ordering-service",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "schema": "src/prisma/schema.prisma",
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJs\"} src/prisma/seed"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
