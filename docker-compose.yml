@@ -1,0 +1,29 @@
+version: '3'
+services:
+  database:
+    image: 'postgres'
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+
+  minio:
+    image: bitnami/minio:latest
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - minionetwork
+    volumes:
+      - 'minio_data:/data'
+    env_file:
+      - .env
+
+networks:
+  minionetwork:
+    driver: bridge
+
+volumes:
+  minio_data:
+    driver: local
+    
