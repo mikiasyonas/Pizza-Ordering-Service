@@ -23,10 +23,12 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
+    "@mui/material-nextjs": "^6.1.1",
     "@prisma/client": "^5.17.0",
     "@types/bcrypt": "^5.0.2",
     "@types/lodash": "^4.17.7",
