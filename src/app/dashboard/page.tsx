@@ -1,9 +1,12 @@
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Pizza Ordering Service',
+'use client';
+import { Box } from '@mui/material';
+import PageContainer from '@/app/dashboard/components/container/PageContainer';
+const Dashboard = () => {
+  return (
+    <PageContainer title="Dashboard" description="this is Dashboard">
+      <Box mt={3}></Box>
+    </PageContainer>
+  );
 };
 
-export default async function Dashboard() {
-  return <></>;
-}
+export default Dashboard;
