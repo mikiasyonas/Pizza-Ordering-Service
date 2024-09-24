@@ -17,23 +17,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Roles {
+enum Permissions {
   UPDATE_ORDER_STATUS
   SEE_ORDERS
   ADD_USERS
   SEE_CUSTOMERS
+  CREATE_ROLES
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
 }
 
 model User {
-  id                   Int                    @id @default(autoincrement())
-  name                 String
-  email                String                 @unique
-  password             String
-  phoneNumber          String
-  location             String
-  role                 Role?
-  restaurant           Restaurant?
-  restaurantInvitation RestaurantInvitation?
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  password    String
+  phoneNumber String
+  location    String
+  role        Role?
+  restaurant  Restaurant?
 }
 
 model Restaurant {
@@ -48,27 +53,13 @@ model Restaurant {
 }
 
 model Role {
-  id           Int               @id @default(autoincrement())
+  id           Int            @id @default(autoincrement())
   name         String
-  userId       Int               @unique
-  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  restaurant   Restaurant       @relation(fields: [restaurantId], references: [id])
+  userId       Int            @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  restaurant   Restaurant    @relation(fields: [restaurantId], references: [id])
   restaurantId Int
-  permissions  RolePermission[]
-}
-
-model Permission {
-  id             Int               @id @default(autoincrement())
-  name           String
-  rolePermission RolePermission[]
-}
-
-model RolePermission {
-  id           Int         @id @default(autoincrement())
-  role         Role       @relation(fields: [roleId], references: [id])
-  roleId       Int
-  permission   Permission @relation(fields: [permissionId], references: [id])
-  permissionId Int
+  permissions  Permissions[]
 }
 
 model Pizza {
@@ -94,10 +85,13 @@ model Order {
 }
 
 model RestaurantInvitation {
-  id           Int         @id @default(autoincrement())
-  employeeId   Int         @unique
-  employee     User       @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id           Int               @id @default(autoincrement())
+  name         String
+  email        String            @unique
+  phoneNumber  String
+  location     String
   restaurantId Int
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  restaurant   Restaurant       @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId       Int
+  status       InvitationStatus
 }
