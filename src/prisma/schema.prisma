@@ -17,6 +17,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Roles {
+  UPDATE_ORDER_STATUS
+  SEE_ORDERS
+  ADD_USERS
+  SEE_CUSTOMERS
+}
+
 model User {
   id                   Int                    @id @default(autoincrement())
   name                 String
