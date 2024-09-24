@@ -18,24 +18,26 @@ datasource db {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  name        String
-  email       String       @unique
-  password    String
-  phoneNumber String
-  location    String
-  role        Role?
-  restaurant  Restaurant?
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  email                String                 @unique
+  password             String
+  phoneNumber          String
+  location             String
+  role                 Role?
+  restaurant           Restaurant?
+  restaurantInvitation RestaurantInvitation?
 }
 
 model Restaurant {
-  id        Int      @id @default(autoincrement())
-  name      String
-  imagePath String
-  managerId Int      @unique
-  manager   User    @relation(fields: [managerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  roles     Role[]
-  Pizza     Pizza[]
+  id                  Int                     @id @default(autoincrement())
+  name                String
+  imagePath           String
+  managerId           Int                     @unique
+  manager             User                   @relation(fields: [managerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roles               Role[]
+  Pizza               Pizza[]
+  employeeInvitations RestaurantInvitation[]
 }
 
 model Role {
@@ -82,4 +84,13 @@ model Order {
   status       String
   userId       Int
   restaurantId Int
+}
+
+model RestaurantInvitation {
+  id           Int         @id @default(autoincrement())
+  employeeId   Int         @unique
+  employee     User       @relation(fields: [employeeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId       Int
 }
