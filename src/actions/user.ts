@@ -2,6 +2,7 @@
 'use server';
 import { prisma } from '@/prisma/client';
 import { RegisterUser, UserResult } from '@/types/user';
+import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 export const signInUser = async (
@@ -32,7 +33,9 @@ export const signInUser = async (
   }
 };
 
-export const registerUser = async (userData: RegisterUser) => {
+export const registerUser = async (
+  userData: RegisterUser
+): Promise<{ error: any } | User> => {
   try {
     const userExists = await prisma.user.findUnique({
       where: {
